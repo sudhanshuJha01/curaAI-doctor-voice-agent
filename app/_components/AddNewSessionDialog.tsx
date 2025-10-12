@@ -15,6 +15,7 @@ import axios from "axios"
 import { DoctorAgentType } from "./DocterAgentCard"
 import { Loader2 } from "lucide-react"
 import SelectDoctorAgentCard from './SelectDoctorAgentCard'
+import { useRouter } from "next/navigation"
 
 const AddNewSessionDialog = () => {
     const [note, setNote] = useState<string>(''); 
@@ -22,7 +23,7 @@ const AddNewSessionDialog = () => {
     const [suggestedDoctors, setSuggestedDoctors] = useState<DoctorAgentType[]>();
     const [selectedDoctor , setSelectedDoctor] = useState<DoctorAgentType>()
 
-
+    const router = useRouter()
     const handleStartConsultation =async ()=>{
         setLoading(true)
         console.log("front note " , note)
@@ -34,7 +35,7 @@ const AddNewSessionDialog = () => {
         console.log("result " , result.data)
         if(result.data.sessionId){
             console.log("result sessionId" , result.data.sessionId)
-            //route new conversation screen
+            router.push(`/dashboard/doctor-agent/${result.data.sessionId}`)
         }
         setLoading(false)
     }
