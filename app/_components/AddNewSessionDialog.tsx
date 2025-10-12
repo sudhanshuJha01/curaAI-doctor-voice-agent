@@ -12,16 +12,31 @@ import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
 import { useState } from "react"
 import axios from "axios"
-import DoctorAgentCard, { DoctorAgentType } from "./DocterAgentCard"
+import { DoctorAgentType } from "./DocterAgentCard"
 import { Loader2 } from "lucide-react"
+import SelectDoctorAgentCard from './SelectDoctorAgentCard'
 
 const AddNewSessionDialog = () => {
     const [note, setNote] = useState<string>(''); 
     const [loading, setLoading] = useState(false);
     const [suggestedDoctors, setSuggestedDoctors] = useState<DoctorAgentType[]>();
+    const [selectedDoctor , setSelectedDoctor] = useState<DoctorAgentType>()
 
-    const handleStartConsultation = ()=>{
-        //save consultation in the db
+
+    const handleStartConsultation =async ()=>{
+        setLoading(true)
+        console.log("front note " , note)
+        const result  = await axios.post('/api/session-chat',{
+            note,
+            selectedDoctor
+        })
+
+        console.log("result " , result.data)
+        if(result.data.sessionId){
+            console.log("result sessionId" , result.data.sessionId)
+            //route new conversation screen
+        }
+        setLoading(false)
     }
 
     const handleDoctorListSuggestion = async () => {
@@ -59,11 +74,14 @@ const AddNewSessionDialog = () => {
                             ) : (
                                 <div className="mt-4">
                                     <p className="mb-2">Based on your notes, we suggest the following specialists:</p>
-                                    <ul className="list-disc pl-5 space-y-2">
+                                    <div className="list-disc pl-5 space-y-2">
                                         {suggestedDoctors.map((doctor) => (
-                                            <DoctorAgentCard docterAgent={doctor} key={doctor.id}/>
+                                            <div onClick={()=>setSelectedDoctor(doctor)}>
+                                                <SelectDoctorAgentCard docterAgent={doctor} key={doctor.id}
+                                            />
+                                            </div>
                                         ))}
-                                    </ul>
+                                    </div>
                                 </div>
                             )}
                         </div>
