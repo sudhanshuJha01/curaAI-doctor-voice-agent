@@ -9,6 +9,7 @@ export type DoctorAgentType = {
         agentPrompt: string,
         voiceId: string,
         subscriptionRequired: boolean
+        regionOfSelection?:string
 }
 
 type DoctorPropType = {
