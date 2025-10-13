@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button"
+"use client";
 import {
   Table,
   TableBody,
@@ -7,33 +7,49 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table"
-import moment from 'moment'
+} from "@/components/ui/table";
+import ViewReportDialog from "./ViewReportDialog";
+import ClientOnlyTimestamp from "./ClientOnlyTimestamp"; 
 
-const HistoryListTable = ({historyList}:any) => {
+const HistoryListTable = ({ historyList }: { historyList: any[] }) => {
+  if (!historyList || historyList.length === 0) {
+    return (
+      <div className="text-center text-gray-500 mt-10">
+        No consultation history found.
+      </div>
+    );
+  }
+
   return (
     <Table>
-  <TableCaption>Previous Consultation Report</TableCaption>
-  <TableHeader>
-    <TableRow>
-      <TableHead className="w-[100px]">AI Medical Specialist</TableHead>
-      <TableHead>Discription</TableHead>
-      <TableHead>Date</TableHead>
-      <TableHead className="text-right">Action</TableHead>
-    </TableRow>
-  </TableHeader>
-  <TableBody>
-    {historyList.map((record:any)=>(        
-    <TableRow>
-      <TableCell className="font-medium">{record.selectedDoctor.specialist}</TableCell>
-      <TableCell>{record.notes}</TableCell>
-      <TableCell>{ moment(new Date(record.createdOn)).fromNow()}</TableCell>
-      <TableCell className="text-right"><Button variant={"link"}>View Report</Button></TableCell>
-    </TableRow>
-    ))}
-  </TableBody>
-</Table>
-  )
-}
+      <TableCaption>A list of your previous consultations.</TableCaption>
+      <TableHeader>
+        <TableRow>
+          <TableHead className="w-[200px]">AI Medical Specialist</TableHead>
+          <TableHead>Chief Complaint / Notes</TableHead>
+          <TableHead>Date</TableHead>
+          <TableHead className="text-right">Action</TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        {historyList.map((record: any) => (
+          <TableRow key={record.sessionId}>
+            <TableCell className="font-medium">
+              {record.selectedDoctor.specialist}
+            </TableCell>
+            <TableCell>{record.notes}</TableCell>
+            <TableCell>
 
-export default HistoryListTable
+              <ClientOnlyTimestamp date={record.createdOn} />
+            </TableCell>
+            <TableCell className="text-right">
+              <ViewReportDialog report={record.report} />
+            </TableCell>
+          </TableRow>
+        ))}
+      </TableBody>
+    </Table>
+  );
+};
+
+export default HistoryListTable;
