@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import Image from 'next/image';
 import axios from 'axios';
 import AddNewSessionDialog from '@/app/_components/AddNewSessionDialog';
+import HistoryListTable from './HistoryListTable';
 
 const HistoryList = () => {
     const [historyList , setHistoryList] = useState([]);
@@ -10,7 +11,7 @@ const HistoryList = () => {
     useEffect(()=>{
        getHistoryList()
     },[])
-    
+
     const getHistoryList =async ()=>{
       const result = await axios.get('/api/session-chat?sessionId=all');
       console.log('history list ' , result.data)
@@ -27,7 +28,9 @@ const HistoryList = () => {
             <h2>No recent Consultation</h2>
             <h2>worite some thing good here</h2>
             <AddNewSessionDialog/>
-        </div>:<div>List</div>
+        </div>:<div>
+          <HistoryListTable historyList={historyList}/>
+        </div>
         }
     </div>
   )
