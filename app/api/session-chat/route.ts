@@ -3,8 +3,7 @@ import { db } from "@/config/db";
 import { sessionChatTable } from "@/config/schema";
 import { v4 as uuidv4 } from 'uuid';
 import { currentUser } from "@clerk/nextjs/server";
-import { eq } from "drizzle-orm"; 
-
+import { desc, eq } from "drizzle-orm"; 
 
 export async function POST(req: NextRequest) {
     try {
@@ -46,15 +45,27 @@ export async function GET(req: NextRequest) {
             return NextResponse.json({ error: "sessionId is required" }, { status: 400 });
         }
 
-        const result = await db.select()
-            .from(sessionChatTable)
-            .where(eq(sessionChatTable.sessionId, sessionId));
-
-        if (result.length === 0) {
-            return NextResponse.json({ error: "Session not found" }, { status: 404 });
+        if(sessionId=='all'){
+                const email = user.primaryEmailAddress?.emailAddress;
+                if (!email) {
+                    return NextResponse.json({ error: "User email not found" }, { status: 400 });
+                }
+                const result = await db.select()
+                .from(sessionChatTable)
+                .where(eq(sessionChatTable.createdBy, email));
+                return NextResponse.json(result);
+        }else{
+            const result = await db.select()
+                .from(sessionChatTable)
+                .where(eq(sessionChatTable.sessionId, sessionId))
+                .orderBy(desc(sessionChatTable.id));
+                
+            if (result.length === 0) {
+                return NextResponse.json({ error: "Session not found" }, { status: 404 });
+            }
+            return NextResponse.json(result[0]);
         }
 
-        return NextResponse.json(result[0]);
 
     } catch (error) {
 
