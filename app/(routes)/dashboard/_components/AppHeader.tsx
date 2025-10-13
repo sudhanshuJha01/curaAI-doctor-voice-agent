@@ -10,8 +10,8 @@ import Logo from '@/app/_components/Logo'
 const menuOption = [
   { id: 1, name: "Home", path: "/dashboard" },
   { id: 2, name: "History", path: "/dashboard/history" },
-  { id: 3, name: "Pricing", path: "/pricing" },
-  { id: 4, name: "Profile", path: "/profile" },
+  { id: 3, name: "Pricing", path: "/dashboard/pricing" },
+  { id: 4, name: "Profile", path: "/dashboard/profile" },
 ];
 
 const AppHeader = () => {

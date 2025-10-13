@@ -10,20 +10,39 @@ import {
 } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import axios from "axios"
 import { DoctorAgentType } from "./DocterAgentCard"
 import { Loader2 } from "lucide-react"
 import SelectDoctorAgentCard from './SelectDoctorAgentCard'
 import { useRouter } from "next/navigation"
+import { useAuth } from "@clerk/nextjs"
+
 
 const AddNewSessionDialog = () => {
     const [note, setNote] = useState<string>(''); 
     const [loading, setLoading] = useState(false);
     const [suggestedDoctors, setSuggestedDoctors] = useState<DoctorAgentType[]>();
     const [selectedDoctor , setSelectedDoctor] = useState<DoctorAgentType>()
+    const [historyList , setHistoryList] = useState([])
+  const { isSignedIn, has } = useAuth();
+  
+
+  const hasProPlan = isSignedIn && has({ plan: "pro" }); 
+
+
+ useEffect(()=>{
+    getHistoryList()
+ },[])
+
+    const getHistoryList =async ()=>{
+      const result = await axios.get('/api/session-chat?sessionId=all');
+      setHistoryList(result.data)
+    }
 
     const router = useRouter()
+    if(!hasProPlan && historyList?.length>=1) return;
+    
     const handleStartConsultation =async ()=>{
         setLoading(true)
         console.log("front note " , note)
@@ -96,7 +115,7 @@ const AddNewSessionDialog = () => {
                             {loading ? 'Analyzing...' : 'Get Suggestions'}
                         </Button>
                     ) : (
-                        <Button onClick={handleStartConsultation}>Start the Consultation</Button>
+                        <Button disabled={!hasProPlan && historyList?.length>=1}  onClick={handleStartConsultation}>Start the Consultation</Button>
                     )}
                 </DialogFooter>
             </DialogContent>

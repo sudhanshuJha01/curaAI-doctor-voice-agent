@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react'
 import Image from 'next/image';
 import axios from 'axios';
-import AddNewSessionDialog from '@/app/_components/AddNewSessionDialog';
+import AddNewSessionDialog from '@/app/(routes)/dashboard/_components/AddNewSessionDialog';
 import HistoryListTable from './HistoryListTable';
 
 const HistoryList = () => {

@@ -1,7 +1,7 @@
 import HistoryList from "./_components/HistoryList"
 import { Button } from "@/components/ui/button"
-import DocterAgentList from "@/app/_components/DocterAgentList"
-import AddNewSessionDialog from "@/app/_components/AddNewSessionDialog"
+import DocterAgentList from "@/app/(routes)/dashboard/_components/DocterAgentList"
+import AddNewSessionDialog from "@/app/(routes)/dashboard/_components/AddNewSessionDialog"
 const Dashboard = () => {
   return (
 

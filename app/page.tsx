@@ -2,6 +2,7 @@
 import { motion } from "motion/react";
 import { Navbar } from "./_components/Navbar";
 import  Link  from "next/link";
+import { Button } from "@/components/ui/button";
 
 export default function HeroSectionOne() {
   return (
@@ -67,9 +68,9 @@ export default function HeroSectionOne() {
           className="relative z-10 mt-8 flex flex-wrap items-center justify-center gap-4"
         >
           <Link href={'/sign-in'}>
-          <button className="w-60 transform rounded-lg bg-black px-6 py-2 font-medium text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200">
+          <Button className="w-60 transform rounded-lg bg-black px-6 py-2 font-medium text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200">
             Explore Now
-          </button></Link>
+          </Button></Link>
      
         </motion.div>
         <motion.div
