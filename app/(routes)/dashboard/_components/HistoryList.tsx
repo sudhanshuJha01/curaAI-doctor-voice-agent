@@ -1,4 +1,3 @@
-// HistoryList.tsx
 "use client";
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
@@ -6,7 +5,11 @@ import AddNewSessionDialog from '@/app/(routes)/dashboard/_components/AddNewSess
 import HistoryListTable from './HistoryListTable';
 import { Heart, Loader2 } from 'lucide-react';
 
-const HistoryList = () => {
+interface HistoryListProps {
+  limit?: number;
+}
+
+const HistoryList = ({ limit }: HistoryListProps) => {
   const [historyList, setHistoryList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -19,7 +22,8 @@ const HistoryList = () => {
       setIsLoading(true);
       const result = await axios.get('/api/session-chat?sessionId=all');
       console.log('history list', result.data);
-      setHistoryList(result.data);
+      const dataToShow = limit ? result.data.slice(0, limit) : result.data;
+      setHistoryList(dataToShow);
     } catch (error) {
       console.error('Error fetching history:', error);
     } finally {
@@ -61,7 +65,7 @@ const HistoryList = () => {
 
   return (
     <div className='bg-white rounded-xl border border-pink-100 shadow-sm'>
-      <HistoryListTable historyList={historyList} />
+      <HistoryListTable historyList={historyList} limit={limit} />
     </div>
   );
 };

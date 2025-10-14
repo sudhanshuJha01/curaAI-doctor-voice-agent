@@ -11,8 +11,15 @@ import {
 import ViewReportDialog from "./ViewReportDialog";
 import ClientOnlyTimestamp from "./ClientOnlyTimestamp";
 import { Stethoscope } from "lucide-react";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
-const HistoryListTable = ({ historyList }: { historyList: any[] }) => {
+interface HistoryListTableProps {
+  historyList: any[];
+  limit?: number;
+}
+
+const HistoryListTable = ({ historyList, limit }: HistoryListTableProps) => {
   if (!historyList || historyList.length === 0) {
     return (
       <div className="text-center text-gray-500 py-10">
@@ -67,6 +74,15 @@ const HistoryListTable = ({ historyList }: { historyList: any[] }) => {
           ))}
         </TableBody>
       </Table>
+      {limit && (
+        <div className="p-4 border-t border-pink-100 text-center">
+          <Link href="/dashboard/history">
+            <Button variant="outline" className="border-pink-300 text-pink-700 hover:bg-pink-50">
+              View All History
+            </Button>
+          </Link>
+        </div>
+      )}
     </div>
   );
 };
