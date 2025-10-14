@@ -1,11 +1,9 @@
 "use client";
 import React from 'react';
-// Remove the Image import if it's no longer used elsewhere
-// import Image from 'next/image'; 
 import { UserButton } from '@clerk/nextjs';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import Logo from '@/app/_components/Logo'
+import { Heart } from 'lucide-react';
 
 const menuOption = [
   { id: 1, name: "Home", path: "/dashboard" },
@@ -18,12 +16,17 @@ const AppHeader = () => {
   const pathname = usePathname();
 
   return (
-    <div className='flex justify-between items-center p-4 shadow-sm border-b'>
+    <div className='flex justify-between items-center p-4 shadow-sm border-b border-pink-100 bg-white'>
       <Link href="/dashboard" className='flex items-center gap-2'>
-        <Logo width={40} height={40} />
+        <div className="relative">
+          <div className="w-10 h-10 bg-gradient-to-br from-pink-500 to-rose-600 rounded-xl flex items-center justify-center shadow-md">
+            <Heart className="w-6 h-6 text-white fill-white" />
+          </div>
+          <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-400 rounded-full border-2 border-white"></div>
+        </div>
         
-        <div className='text-2xl font-bold bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent'>
-          CureAI
+        <div className='text-xl md:text-2xl font-bold text-gray-900'>
+          Cure<span className='text-pink-600'>AI</span>
         </div>
       </Link>
       
@@ -34,8 +37,8 @@ const AppHeader = () => {
             <Link 
               href={item.path} 
               key={item.id} 
-              className={`capitalize transition-colors hover:text-blue-600 
-                ${isActive ? 'text-blue-600 font-semibold' : ''}`
+              className={`capitalize transition-colors hover:text-pink-600 
+                ${isActive ? 'text-pink-600 font-semibold' : ''}`
               }
             >
               {item.name}
