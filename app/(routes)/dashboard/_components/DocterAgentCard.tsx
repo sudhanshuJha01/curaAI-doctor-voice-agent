@@ -38,7 +38,7 @@ const DoctorAgentCard = ({ docterAgent }: DoctorPropType) => {
       setLoading(true);
       const result = await axios.post('/api/session-chat', {
         note: "User selected doctor agent",
-        selectedDoctor: docterAgent.specialist
+        selectedDoctor: docterAgent
       });
 
       console.log("result", result.data);
