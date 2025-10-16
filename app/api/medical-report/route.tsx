@@ -125,7 +125,7 @@ Please generate a structured medical report based on this conversation.`;
     }
 
 
-    const updateResult = await db
+      await db
       .update(sessionChatTable)
       .set({
         report: jsonResponse,
