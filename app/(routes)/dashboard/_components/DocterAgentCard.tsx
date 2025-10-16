@@ -41,10 +41,8 @@ const DoctorAgentCard = ({ docterAgent }: DoctorPropType) => {
         selectedDoctor: docterAgent
       });
 
-      console.log("result", result.data);
       if (result.data.sessionId) {
-        console.log("result sessionId", result.data.sessionId);
-        router.push(`/dashboard/doctor-agent/${result.data.sessionId}`);
+           router.push(`/dashboard/doctor-agent/${result.data.sessionId}`);
       }
     } catch (error) {
       console.error("Error starting consultation:", error);

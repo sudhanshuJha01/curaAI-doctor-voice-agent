@@ -32,7 +32,6 @@ const ReportListItem = ({
 );
 
 const ViewReportDialog = ({ report }: { report: any }) => {
-  console.log("report in view", report);
   if (!report) return null;
 
   return (

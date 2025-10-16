@@ -9,7 +9,6 @@ const menuOption = [
   { id: 1, name: "Home", path: "/dashboard" },
   { id: 2, name: "History", path: "/dashboard/history" },
   { id: 3, name: "Pricing", path: "/dashboard/pricing" },
-  { id: 4, name: "Profile", path: "/dashboard/profile" },
 ];
 
 const AppHeader = () => {

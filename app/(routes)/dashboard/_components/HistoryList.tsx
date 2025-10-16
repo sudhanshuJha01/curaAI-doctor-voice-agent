@@ -21,7 +21,6 @@ const HistoryList = ({ limit }: HistoryListProps) => {
     try {
       setIsLoading(true);
       const result = await axios.get('/api/session-chat?sessionId=all');
-      console.log('history list', result.data);
       const dataToShow = limit ? result.data.slice(0, limit) : result.data;
       setHistoryList(dataToShow);
     } catch (error) {

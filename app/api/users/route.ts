@@ -32,11 +32,9 @@ export async function POST(req: NextRequest) {
                 })
                 .returning(); 
 
-            console.log('New user created: ', newUser[0]);
             return NextResponse.json(newUser[0]);
         }
 
-        console.log('Existing user found: ', existedUser[0]);
         return NextResponse.json(existedUser[0]);
 
     } catch (error) {

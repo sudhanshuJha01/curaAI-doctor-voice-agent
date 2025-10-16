@@ -25,7 +25,6 @@ const Provider = ({ children }: Readonly<{
     const createNewUser = async () => {
         try {
             const response = await axios.post('/api/users');
-            console.log('User data from API:', response.data);
             setUserDetail(response?.data)
         } catch (error) {
             console.error("Failed to create or fetch user:", error);

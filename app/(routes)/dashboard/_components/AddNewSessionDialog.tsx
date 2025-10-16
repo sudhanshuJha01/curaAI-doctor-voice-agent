@@ -48,16 +48,14 @@ const AddNewSessionDialog = () => {
 
     try {
       setLoading(true);
-      console.log("front note", note);
+
       const result = await axios.post("/api/session-chat", {
         note,
         selectedDoctor,
       });
 
-      console.log("result", result.data);
       if (result.data.sessionId) {
-        console.log("result sessionId", result.data.sessionId);
-        router.push(`/dashboard/doctor-agent/${result.data.sessionId}`);
+                router.push(`/dashboard/doctor-agent/${result.data.sessionId}`);
         setOpen(false);
       }
     } catch (error) {
@@ -74,7 +72,6 @@ const AddNewSessionDialog = () => {
         note,
       });
 
-      console.log("Data received from API:", result.data);
       setSuggestedDoctors(result.data.doctors);
     } catch (error) {
       console.error("Error fetching doctor suggestions:", error);
